@@ -207,6 +207,103 @@ The project includes comprehensive unit and functional tests.
    - Verify the Logic App workflows are running
    - Test the API endpoints through API Management
 
+## Running Workflows from Azure Portal
+
+After deployment, you can test and run workflows directly from the Azure Portal:
+
+### Running the HTTP Trigger Workflow
+
+1. Navigate to your Logic App in the [Azure Portal](https://portal.azure.com)
+2. Go to **Workflows** and select `wf_orders_from_http_to_sb`
+3. Click on **Run** > **Run with payload**
+4. In the request body, paste the sample order JSON from `sample_order.json` or use the example below:
+
+```json
+{
+  "order": {
+    "orderId": "ORD-2024-001",
+    "orderDate": "2024-01-15T10:30:00Z",
+    "customer": {
+      "accountType": "Professional",
+      "companyName": "Tech Solutions Inc",
+      "contactPerson": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com",
+        "jobTitle": "IT Manager"
+      },
+      "billingAddress": {
+        "street": "123 Tech Street",
+        "city": "Seattle",
+        "postalCode": "98101",
+        "country": "USA"
+      }
+    },
+    "contractDetails": {
+      "contractId": "CON-2024-001",
+      "servicePlan": "Fiber Pro Ultra",
+      "commitmentPeriod": "12",
+      "monthlyFee": 49.99
+    },
+    "product": {
+      "type": "Router",
+      "model": "Pro Router",
+      "version": "V5",
+      "features": ["4 Ethernet ports", "VoIP capability", "Remote management", "Advanced firewall"],
+      "quantity": 1,
+      "unitPrice": 199
+    },
+    "delivery": {
+      "method": "Express Courier",
+      "trackingNumber": "TRK-2024-001",
+      "estimatedDeliveryDate": "2024-01-20",
+      "deliveryAddress": {
+        "street": "123 Tech Street",
+        "city": "Seattle",
+        "postalCode": "98101",
+        "country": "USA"
+      },
+      "deliveryInstructions": "Leave at reception"
+    },
+    "payment": {
+      "method": "Corporate Account",
+      "poNumber": "PO-2024-001",
+      "totalPrice": 199,
+      "installationFee": 49,
+      "discount": {
+        "type": "Loyalty",
+        "amount": 50,
+        "description": "5-year customer discount"
+      }
+    }
+  }
+}
+```
+
+5. Click **Run** to execute the workflow
+6. Monitor the run history to see the workflow execution and any triggered downstream workflows
+
+### Monitoring Workflow Runs
+
+1. In the Logic App, go to **Workflows** and select any workflow
+2. Click on **Run History** to see all past executions
+3. Click on a specific run to view:
+   - Input/output data for each action
+   - Execution time and status
+   - Any errors or failures
+
+### Testing via API Management
+
+Alternatively, you can test workflows through API Management:
+
+1. Navigate to your API Management instance in the Azure Portal
+2. Go to **APIs** > **Order Process API**
+3. Select the **Process Order** operation
+4. Click on the **Test** tab
+5. Paste your JSON payload in the request body
+6. Add your subscription key in the header
+7. Click **Send** to trigger the workflow
+
 ## Clean Up
 
 To remove all deployed resources:
