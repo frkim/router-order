@@ -44,3 +44,9 @@ node_modules/
 dist/
 build/
 publish/
+
+# Test coverage
+coverage/
+
+# Package lock files (optional - uncomment if needed)
+# package-lock.json

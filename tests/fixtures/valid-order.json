@@ -1,0 +1,64 @@
+{
+  "order": {
+    "orderId": "ORD-2024-001",
+    "orderDate": "2024-01-15T10:30:00Z",
+    "customer": {
+      "accountType": "Professional",
+      "companyName": "Tech Solutions Inc",
+      "contactPerson": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@techsolutions.com",
+        "jobTitle": "IT Manager"
+      },
+      "billingAddress": {
+        "street": "123 Tech Street",
+        "city": "Seattle",
+        "postalCode": "98101",
+        "country": "USA"
+      }
+    },
+    "contractDetails": {
+      "contractId": "CON-2024-001",
+      "servicePlan": "Fiber Pro Ultra",
+      "commitmentPeriod": "12",
+      "monthlyFee": 49.99
+    },
+    "product": {
+      "type": "Router",
+      "model": "Pro Router",
+      "version": "V5",
+      "features": [
+        "4 Ethernet ports",
+        "VoIP capability",
+        "Remote management",
+        "Advanced firewall"
+      ],
+      "quantity": 1,
+      "unitPrice": 199
+    },
+    "delivery": {
+      "method": "Express Courier",
+      "trackingNumber": "TRK-2024-001",
+      "estimatedDeliveryDate": "2024-01-20",
+      "deliveryAddress": {
+        "street": "123 Tech Street",
+        "city": "Seattle",
+        "postalCode": "98101",
+        "country": "USA"
+      },
+      "deliveryInstructions": "Leave at reception"
+    },
+    "payment": {
+      "method": "Corporate Account",
+      "poNumber": "PO-2024-001",
+      "totalPrice": 199,
+      "installationFee": 49,
+      "discount": {
+        "type": "Loyalty",
+        "amount": 50,
+        "description": "5-year customer discount"
+      }
+    }
+  }
+}

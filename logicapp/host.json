@@ -1,0 +1,31 @@
+{
+  "version": "2.0",
+  "extensionBundle": {
+    "id": "Microsoft.Azure.Functions.ExtensionBundle.Workflows",
+    "version": "[1.*, 2.0.0)"
+  },
+  "extensions": {
+    "workflow": {
+      "settings": {
+        "Runtime.Backend.FlowRunRetryableActionJobCallback.MaximumHostingDelay": "00:02:00"
+      }
+    },
+    "http": {
+      "routePrefix": ""
+    }
+  },
+  "logging": {
+    "logLevel": {
+      "default": "Information",
+      "Host.Results": "Information",
+      "Function": "Information",
+      "Host.Aggregator": "Information"
+    },
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    }
+  }
+}

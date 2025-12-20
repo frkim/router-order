@@ -1,0 +1,30 @@
+{
+  "name": "router-order-tests",
+  "version": "1.0.0",
+  "description": "Test suite for Router Order Logic Apps workflows",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:unit": "jest --testPathPattern=unit",
+    "test:functional": "jest --testPathPattern=functional",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/node_modules/**",
+      "!**/coverage/**"
+    ]
+  }
+}

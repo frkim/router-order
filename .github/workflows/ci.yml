@@ -1,0 +1,94 @@
+name: CI - Test and Validate
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: tests/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: tests
+        run: npm ci
+      
+      - name: Run unit tests
+        working-directory: tests
+        run: npm run test:unit
+      
+      - name: Run functional tests
+        working-directory: tests
+        run: npm run test:functional
+      
+      - name: Upload test coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-coverage
+          path: tests/coverage/
+          retention-days: 7
+
+  validate-bicep:
+    name: Validate Bicep Templates
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Azure CLI
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az version
+      
+      - name: Validate Bicep syntax
+        run: |
+          az bicep build --file infra/main.bicep
+
+  validate-workflows:
+    name: Validate Workflow JSON
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Validate JSON files
+        run: |
+          echo "Validating workflow JSON files..."
+          for file in logicapp/wf_*/workflow.json; do
+            echo "Validating: $file"
+            python3 -m json.tool "$file" > /dev/null
+            if [ $? -eq 0 ]; then
+              echo "✓ Valid JSON: $file"
+            else
+              echo "✗ Invalid JSON: $file"
+              exit 1
+            fi
+          done
+          
+          echo "Validating connections.json..."
+          python3 -m json.tool logicapp/connections.json > /dev/null
+          
+          echo "Validating host.json..."
+          python3 -m json.tool logicapp/host.json > /dev/null
+          
+          echo "All JSON files are valid!"

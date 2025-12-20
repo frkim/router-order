@@ -34,6 +34,136 @@ graph TD
 - [Azure subscription](https://azure.microsoft.com/free/)
 - [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli)
 - [PowerShell 7.0 or later](https://docs.microsoft.com/powershell/scripting/install/installing-powershell) (for Windows deployment)
+- [Node.js 18 or later](https://nodejs.org/) (for running tests)
+- [Visual Studio Code](https://code.visualstudio.com/) with [Azure Logic Apps (Standard) extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurelogicapps)
+
+## Project Structure
+
+```
+router-order/
+├── .github/
+│   └── workflows/          # CI/CD GitHub Actions workflows
+│       └── ci.yml          # Continuous Integration workflow
+├── .vscode/                # VS Code configuration for Logic Apps development
+│   ├── extensions.json     # Recommended VS Code extensions
+│   ├── launch.json         # Debug configurations
+│   ├── settings.json       # Workspace settings
+│   └── tasks.json          # Build and test tasks
+├── api/                    # API definitions (OpenAPI/Swagger)
+│   ├── order-process/      # Order processing API definition
+│   │   └── openapi.yaml
+│   └── stock-management/   # Stock management API definition
+│       └── openapi.yaml
+├── infra/                  # Infrastructure as Code (Bicep)
+│   ├── modules/            # Bicep modules
+│   │   ├── apim.bicep              # API Management
+│   │   ├── application-insights.bicep
+│   │   ├── logic-app.bicep         # Logic App (Standard)
+│   │   ├── role-assignment.bicep   # RBAC assignments
+│   │   ├── servicebus.bicep        # Service Bus
+│   │   └── storage.bicep           # Storage Account
+│   ├── abbreviations.json  # Resource naming abbreviations
+│   ├── main.bicep          # Main infrastructure template
+│   └── main.parameters.json
+├── logicapp/               # Logic App Standard project
+│   ├── Artifacts/
+│   │   └── Maps/           # XSLT transformations
+│   │       └── transformation_router.xslt
+│   ├── wf_orders_from_http_to_sb/      # HTTP trigger workflow
+│   │   └── workflow.json
+│   ├── wf_orders_from_sb_to_check_in_stock/  # Stock check workflow
+│   │   └── workflow.json
+│   ├── wf_orders_from_sb_to_router_order/    # Router order workflow
+│   │   └── workflow.json
+│   ├── wf_orders_from_sb_to_tech_shed/       # Tech scheduling workflow
+│   │   └── workflow.json
+│   ├── wf_orders_router_order/               # Mock order API workflow
+│   │   └── workflow.json
+│   ├── connections.json    # Connection definitions
+│   ├── host.json           # Host configuration
+│   ├── local.settings.json.example  # Example local settings
+│   └── parameters.json     # Workflow parameters
+├── scripts/                # Deployment scripts
+│   └── postprovision.ps1   # Post-deployment configuration
+├── tests/                  # Test suite
+│   ├── fixtures/           # Test data
+│   ├── functional/         # Functional tests
+│   └── unit/               # Unit tests
+├── azure.yaml              # Azure Developer CLI configuration
+├── sample_order.json       # Sample order payload
+└── README.md
+```
+
+## Local Development
+
+### Setting Up Your Development Environment
+
+1. **Install VS Code Extensions**
+   
+   Open the project in VS Code and install the recommended extensions when prompted, or run:
+   ```bash
+   code --install-extension ms-azuretools.vscode-azurelogicapps
+   code --install-extension ms-azuretools.vscode-azurefunctions
+   ```
+
+2. **Configure Local Settings**
+   
+   Copy the example settings file and update with your values:
+   ```bash
+   cp logicapp/local.settings.json.example logicapp/local.settings.json
+   ```
+   
+   Update the values in `local.settings.json` with your Azure resource details.
+
+3. **Start the Logic App Locally**
+   
+   Use VS Code tasks or run:
+   ```bash
+   cd logicapp
+   func start
+   ```
+
+### Running Tests
+
+The project includes comprehensive unit and functional tests.
+
+1. **Install test dependencies**
+   ```bash
+   cd tests
+   npm install
+   ```
+
+2. **Run all tests**
+   ```bash
+   npm test
+   ```
+
+3. **Run unit tests only**
+   ```bash
+   npm run test:unit
+   ```
+
+4. **Run functional tests only**
+   ```bash
+   npm run test:functional
+   ```
+
+5. **Run tests with watch mode**
+   ```bash
+   npm run test:watch
+   ```
+
+### Test Categories
+
+- **Unit Tests** (`tests/unit/`)
+  - Workflow definition validation
+  - Order schema validation
+  - Stock response schema validation
+
+- **Functional Tests** (`tests/functional/`)
+  - XSLT transformation testing
+  - API definition validation
+  - Infrastructure template validation
 
 ## Deployment Steps
 
@@ -77,16 +207,6 @@ graph TD
    - Verify the Logic App workflows are running
    - Test the API endpoints through API Management
 
-## Project Structure
-
-- `/infra`: Bicep infrastructure-as-code templates
-- `/logicapp`: Logic App implementation files
-  - `/wf_*`: Logic App workflow definitions
-  - `/Artifacts/Maps`: XSLT transformations for data mapping
-  - `connections.json`: API connection definitions
-- `/api`: API definitions and examples
-- `/scripts`: Deployment and configuration scripts
-
 ## Clean Up
 
 To remove all deployed resources:
@@ -102,9 +222,39 @@ This will delete:
 - API Management instance
 - Storage accounts and their data
 
+## CI/CD
+
+This project includes a GitHub Actions workflow (`.github/workflows/ci.yml`) that:
+- Runs unit and functional tests
+- Validates Bicep templates
+- Validates workflow JSON files
+
+The workflow runs automatically on:
+- Push to `main` branch
+- Push to `feature/*` branches
+- Pull requests to `main` branch
+
+## Best Practices Implemented
+
+This project follows Azure Logic Apps best practices:
+
+1. **Project Organization**: Clear separation of workflows, artifacts, and infrastructure
+2. **Configuration Management**: Uses `host.json`, `connections.json`, and `parameters.json` per Microsoft guidelines
+3. **VS Code Integration**: Full support for the Azure Logic Apps (Standard) extension
+4. **Security**: Uses Managed Identity for Service Bus connections
+5. **Modular Infrastructure**: Bicep templates are modularized for maintainability
+6. **Testing**: Comprehensive unit and functional test suite
+7. **CI/CD**: Automated testing and validation pipeline
+
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests to ensure they pass
+5. Submit a Pull Request
 
 ## License
 
