@@ -9,10 +9,16 @@ on:
     branches:
       - main
 
+# Limit permissions for all jobs
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout repository
@@ -48,6 +54,8 @@ jobs:
   validate-bicep:
     name: Validate Bicep Templates
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout repository
@@ -66,6 +74,8 @@ jobs:
   validate-workflows:
     name: Validate Workflow JSON
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout repository

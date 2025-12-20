@@ -45,6 +45,12 @@ dist/
 build/
 publish/
 
+# Bicep build output
+*.json.lock
+infra/*.json
+!infra/abbreviations.json
+!infra/main.parameters.json
+
 # Test coverage
 coverage/
 
