@@ -1,0 +1,62 @@
+{
+  "folders": [
+    {
+      "name": "LogicApp",
+      "path": "./logicapp"
+    },
+    {
+      "name": "Infrastructure",
+      "path": "./infra"
+    },
+    {
+      "name": "API Definitions",
+      "path": "./api"
+    },
+    {
+      "name": "Tests",
+      "path": "./tests"
+    },
+    {
+      "name": "Scripts",
+      "path": "./scripts"
+    },
+    {
+      "name": "Root",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "azureLogicAppsStandard.projectPath": "${workspaceFolder:LogicApp}",
+    "azureFunctions.deploySubpath": "logicapp",
+    "azureFunctions.projectLanguage": "Workflow",
+    "azureFunctions.projectRuntime": "~4",
+    "azureFunctions.preDeployTask": "",
+    "debug.internalConsoleOptions": "neverOpen",
+    "files.associations": {
+      "*.json": "json"
+    },
+    "json.schemas": [
+      {
+        "fileMatch": [
+          "**/workflow.json"
+        ],
+        "url": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#"
+      }
+    ],
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "[json]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "terminal.integrated.cwd": "${workspaceFolder:LogicApp}"
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-azuretools.vscode-azurelogicapps",
+      "ms-azuretools.vscode-azurefunctions",
+      "ms-dotnettools.csharp",
+      "redhat.vscode-yaml",
+      "DotJoshJohnson.xml"
+    ]
+  }
+}

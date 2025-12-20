@@ -90,11 +90,30 @@ router-order/
 │   ├── functional/         # Functional tests
 │   └── unit/               # Unit tests
 ├── azure.yaml              # Azure Developer CLI configuration
+├── router-order.code-workspace  # VS Code workspace file (open this!)
 ├── sample_order.json       # Sample order payload
 └── README.md
 ```
 
 ## Local Development
+
+### Opening the Project with VS Code Workspace
+
+This project includes a VS Code workspace file (`router-order.code-workspace`) that is optimized for Azure Logic Apps (Standard) development. **Always open the project using the workspace file** to ensure proper integration with the Logic Apps extension:
+
+```bash
+code router-order.code-workspace
+```
+
+Or in VS Code: **File** > **Open Workspace from File...** > select `router-order.code-workspace`
+
+The workspace file:
+- Correctly configures the Logic App project path for the Azure Logic Apps extension
+- Organizes folders (LogicApp, Infrastructure, API Definitions, Tests, Scripts) in the Explorer
+- Sets up JSON schema validation for workflow files
+- Configures recommended extensions
+
+> **Note**: Opening the project folder directly (instead of the workspace file) may cause the Logic Apps designer and debugging features to not work properly.
 
 ### Setting Up Your Development Environment
 
